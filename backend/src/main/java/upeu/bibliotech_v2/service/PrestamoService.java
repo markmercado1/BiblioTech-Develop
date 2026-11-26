@@ -1,6 +1,7 @@
 package upeu.bibliotech_v2.service;
 
 import org.springframework.stereotype.Service;
+import upeu.bibliotech_v2.exception.EstudianteNoEncontradoException;
 import upeu.bibliotech_v2.model.Estudiante;
 import upeu.bibliotech_v2.model.Libro;
 import upeu.bibliotech_v2.model.Prestamo;
@@ -9,6 +10,7 @@ import upeu.bibliotech_v2.repository.LibroRepository;
 import upeu.bibliotech_v2.repository.PrestamoRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class PrestamoService {
@@ -54,6 +56,20 @@ public class PrestamoService {
         }
 
         return true;
+    }
+
+    /**
+     * Devuelve los préstamos con estado ACTIVO de un estudiante.
+     * Lanza EstudianteNoEncontradoException si el estudiante no existe.
+     */
+    public List<Prestamo> listarPrestamosActivos(Long estudianteId) {
+
+        if (!estudianteRepository.existsById(estudianteId)) {
+            throw new EstudianteNoEncontradoException();
+        }
+
+        return prestamoRepository.findByEstudianteIdAndEstado(
+                estudianteId, "ACTIVO");
     }
 
     public Prestamo registrarPrestamo(Long estudianteId, Long libroId) {

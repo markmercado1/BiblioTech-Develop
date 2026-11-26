@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Prestamo } from '../../services/prestamo';
+import { Prestamo, PrestamoActivo } from '../../services/prestamo';
 
 @Component({
   selector: 'app-prestamos',
@@ -17,6 +17,26 @@ export class Prestamos {
   disponible: boolean | null = null;
 
   constructor(private prestamoService: Prestamo) {}
+
+  prestamosActivos: PrestamoActivo[] = [];
+  consultaRealizada = false;
+
+  consultarPrestamosActivos(): void {
+    this.prestamoService
+      .obtenerPrestamosActivos(this.estudianteId)
+      .subscribe({
+        next: (prestamos) => {
+          this.prestamosActivos = prestamos;
+          this.consultaRealizada = true;
+        },
+        error: () => {
+          this.prestamosActivos = [];
+          this.consultaRealizada = false;
+          this.disponible = false;
+          this.mensaje = 'No se pudo consultar los préstamos activos.';
+        }
+      });
+  }
 
   validarPrestamo(): void {
     this.prestamoService

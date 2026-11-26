@@ -69,7 +69,7 @@ public class PrestamoService {
         }
 
         return prestamoRepository.findByEstudianteIdAndEstado(
-                estudianteId, "ACTIVO");
+                estudianteId, "DEVUELTO");
     }
 
     public Prestamo registrarPrestamo(Long estudianteId, Long libroId) {

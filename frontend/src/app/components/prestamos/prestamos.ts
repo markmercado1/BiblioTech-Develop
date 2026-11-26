@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Prestamo, PrestamoActivo } from '../../services/prestamo';
 
@@ -16,7 +16,7 @@ export class Prestamos {
   mensaje: string = '';
   disponible: boolean | null = null;
 
-  constructor(private prestamoService: Prestamo) {}
+  private readonly prestamoService = inject(Prestamo);
 
   prestamosActivos: PrestamoActivo[] = [];
   consultaRealizada = false;

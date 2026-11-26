@@ -16,10 +16,10 @@ module.exports = defineConfig([
     processor: angular.processInlineTemplates,
     rules: {
       '@typescript-eslint/no-inferrable-types': 'off',
-      '@angular-eslint/prefer-inject': 'off',
+      '@angular-eslint/prefer-inject': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'error',
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
 
       '@angular-eslint/directive-selector': [
         'error',

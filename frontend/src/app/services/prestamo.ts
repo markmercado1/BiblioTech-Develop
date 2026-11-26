@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -8,9 +8,8 @@ import { Observable } from 'rxjs';
 
 export class Prestamo {
 
-  private apiUrl = 'http://localhost:8080/api/prestamos';
-
-  constructor(private http: HttpClient) {}
+  private readonly apiUrl = 'http://localhost:8080/api/prestamos';
+  private readonly http = inject(HttpClient);
 
   validarPrestamo(estudianteId: number, libroId: number): Observable<boolean> {
     const params = new HttpParams()
@@ -23,7 +22,7 @@ export class Prestamo {
     );
   }
 
-  registrarPrestamo(estudianteId: number, libroId: number): Observable<any> {
+  registrarPrestamo(estudianteId: number, libroId: number): Observable<unknown> {
     const params = new HttpParams()
       .set('estudianteId', estudianteId)
       .set('libroId', libroId);

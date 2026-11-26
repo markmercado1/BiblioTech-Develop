@@ -92,4 +92,28 @@ describe('Prestamo', () => {
     req.flush(prestamoSimulado);
   });
 
+
+  // PRUEBA: CONSULTA DE PRÉSTAMOS ACTIVOS
+  it('debe consultar los préstamos activos de un estudiante', () => {
+
+    service.obtenerPrestamosActivos(1).subscribe(resultado => {
+      expect(resultado.length).toBe(1);
+      expect(resultado[0].estado).toBe('ACTIVO');
+    });
+
+    const req = httpMock.expectOne(request =>
+      request.url === 'http://localhost:8080/api/prestamos/activos' &&
+      request.params.get('estudianteId') === '1'
+    );
+
+    expect(req.request.method).toBe('GET');
+
+    req.flush([{
+      id: 1,
+      estado: 'ACTIVO',
+      fechaPrestamo: '2026-09-17',
+      libro: { id: 1, titulo: 'Programacion Java' }
+    }]);
+  });
+
 });

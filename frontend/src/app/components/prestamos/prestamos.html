@@ -46,7 +46,25 @@
         Registrar préstamo
       </button>
 
+      <button
+        id="btnActivos"
+        class="btn-validar"
+        (click)="consultarPrestamosActivos()">
+        Ver préstamos activos
+      </button>
+
     </div>
+
+    @if (consultaRealizada) {
+      <div id="listaActivos" class="resultado correcto">
+        <strong>Préstamos activos del estudiante {{ estudianteId }}: {{ prestamosActivos.length }}</strong>
+        <ul>
+          @for (p of prestamosActivos; track p.id) {
+            <li>{{ p.libro.titulo }} (desde {{ p.fechaPrestamo }})</li>
+          }
+        </ul>
+      </div>
+    }
 
     @if (mensaje) {
 

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import upeu.bibliotech_v2.model.Prestamo;
 import upeu.bibliotech_v2.service.PrestamoService;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/prestamos")
@@ -24,6 +26,14 @@ public class PrestamoController {
                 prestamoService.puedePrestar(estudianteId, libroId);
 
         return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/activos")
+    public ResponseEntity<List<Prestamo>> listarPrestamosActivos(
+            @RequestParam Long estudianteId) {
+
+        return ResponseEntity.ok(
+                prestamoService.listarPrestamosActivos(estudianteId));
     }
 
     @PostMapping
